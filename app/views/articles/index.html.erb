@@ -1,0 +1,48 @@
+
+</br>
+
+<div class="container">
+<h1 style="text-align: center">Blog Articles</h1>
+
+</br>
+
+<% if notice.present? %>
+  <div class="alert alert-warning alert-dismissible fade in" style="width:70%; margin: 0 auto;" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <%= notice %>
+  </div>
+  </br>
+  <% end %>
+
+
+
+<div class="page-body" style="width:70%; margin: 0 auto;">
+
+  <%= link_to 'New Article', new_article_path, class: 'btn btn-success btn-sm glyphicon glyphicon-plus' %>
+
+</br>
+</br>
+
+  <% @articles.each do |article| %>
+      <div class="card card-inverse" style="background-color: #373a3c; border-color: #333; color:#fff;">
+        <div class="card-block">
+          <h4 class="card-title"><%= article.title %></h4>
+          <p class="card-text"><%= @markdown.render(article.content).html_safe %></p>
+          <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);" />
+          <div>
+            <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Delete', article, method: :delete, data: {confirm: 'Are you sure ?'}, class: 'btn btn-danger btn-sm' %>
+              <span style="color: #D3D3D3;font-size: small;float: right">Posted @ <%= article.created_at %><span>
+          </div>
+        </div>
+      </div>
+   <% end %>
+
+
+ </div>
+
+<br>
+</div>
+
