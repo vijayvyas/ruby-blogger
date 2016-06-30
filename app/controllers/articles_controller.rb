@@ -1,16 +1,25 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
+  impressionist :actions=>[:show]
 
   # GET /articles
   # GET /articles.json
   def index
     @articles = Article.all
     @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+
+    if params[:search]
+      @articles = Article.search(params[:search]).order("created_at DESC")
+    else
+      @articles = Article.all.order('created_at DESC')
+    end
+
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
+    impressionist(@article)
   end
 
   # GET /articles/new
